@@ -1,0 +1,45 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.gcse-search input.gsc-input {
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    border: 1px solid #ddd !important;
+}
+
+.gcse-search button.gsc-search-button {
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    background-color: #007bff !important;
+    border: none !important;
+    color: #fff !important;
+}
+
+.gcse-search button.gsc-search-button:hover {
+    background-color: #0056b3 !important;
+}
