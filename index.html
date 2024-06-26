@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISearch</title>
+    <title>Custom Search Engine</title>
     <link rel="stylesheet" href="styles.css">
     <script async src="https://cse.google.com/cse.js?cx=963b7e89967c04d66"></script>
 </head>
 <body>
-    <div class="container">
-        <header class="isearch-header">
-            <div class="isearch-buttons">
-                <div class="isearch-button isearch-close"></div>
-                <div class="isearch-button isearch-minimize"></div>
-                <div class="isearch-button isearch-expand"></div>
+    <div class="chrome-container">
+        <header class="chrome-header">
+            <div class="chrome-buttons">
+                <div class="chrome-button chrome-close"></div>
+                <div class="chrome-button chrome-minimize"></div>
+                <div class="chrome-button chrome-expand"></div>
             </div>
-            <h1 class="isearch-title">ISearch</h1>
-            <div class="isearch-controls">
-                <button id="toggle-theme" class="isearch-button isearch-theme-toggle">Toggle Dark Mode</button>
+            <h1 class="chrome-title">Custom Search Engine</h1>
+            <div class="chrome-controls">
+                <button id="toggle-theme" class="chrome-button chrome-theme-toggle">Toggle Dark Mode</button>
             </div>
         </header>
-        <main>
-            <div class="isearch-search-bar">
-                <input type="text" id="search-input" class="isearch-input" placeholder="Search ISearch...">
-                <button id="search-button" class="isearch-button isearch-search-button">Search</button>
-                <div id="suggestions" class="isearch-suggestions"></div>
+        <main class="chrome-main">
+            <div class="chrome-search-bar">
+                <input type="text" id="search-input" class="chrome-input" placeholder="Search Google...">
+                <button id="search-button" class="chrome-button chrome-search-button">Search</button>
+                <div id="suggestions" class="chrome-suggestions"></div>
             </div>
-            <div class="isearch-filters">
-                <label for="filter-date" class="isearch-label">Filter by Date:</label>
-                <select id="filter-date" class="isearch-select">
+            <div class="chrome-filters">
+                <label for="filter-date" class="chrome-label">Filter by Date:</label>
+                <select id="filter-date" class="chrome-select">
                     <option value="">Any time</option>
                     <option value="d">Past day</option>
                     <option value="w">Past week</option>
                     <option value="m">Past month</option>
                     <option value="y">Past year</option>
                 </select>
-                <label for="filter-type" class="isearch-label">Filter by Type:</label>
-                <select id="filter-type" class="isearch-select">
+                <label for="filter-type" class="chrome-label">Filter by Type:</label>
+                <select id="filter-type" class="chrome-select">
                     <option value="">All</option>
                     <option value="web">Web</option>
                     <option value="images">Images</option>
@@ -44,11 +44,11 @@
                     <option value="videos">Videos</option>
                 </select>
             </div>
-            <div id="loader" class="isearch-loader"></div>
-            <div id="search-results" class="isearch-results"></div>
-            <div id="related-searches" class="isearch-related-searches"></div>
-            <div id="search-history" class="isearch-search-history"></div>
-            <div id="pagination" class="isearch-pagination"></div>
+            <div id="loader" class="chrome-loader"></div>
+            <div id="search-results" class="chrome-results"></div>
+            <div id="related-searches" class="chrome-related-searches"></div>
+            <div id="search-history" class="chrome-search-history"></div>
+            <div id="pagination" class="chrome-pagination"></div>
         </main>
     </div>
 
