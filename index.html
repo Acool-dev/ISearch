@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Engine</title>
+    <title>Custom Search Engine</title>
     <link rel="stylesheet" href="styles.css">
+    <script async src="https://cse.google.com/cse.js?cx=963b7e89967c04d66"></script>
 </head>
 <body>
     <div class="container">
-        <h1>ISearch</h1>
-        <script async src="https://cse.google.com/cse.js?cx=963b7e89967c04d66"></script>
-        <div class="gcse-search"></div>
+        <h1>Custom Search Engine</h1>
+        <div class="gcse-searchbox-only" data-enableAutoComplete="true"></div>
+        <div id="loader" class="loader" style="display:none;"></div>
+        <div id="search-results" class="results"></div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchBox = document.querySelector(".gsc-input");
+            const loader = document.getElementById("loader");
+            const resultsDiv = document.getElementById("search-results");
+
+            // Show loader when searching
+            searchBox.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    loader.style.display = "block";
+                }
+            });
+
+            // Hide loader and show results
+            window.addEventListener("load", function() {
+                const searchResultsIframe = document.querySelector("iframe.gsc-results");
+                searchResultsIframe.onload = function() {
+                    loader.style.display = "none";
+                    resultsDiv.style.display = "block";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
