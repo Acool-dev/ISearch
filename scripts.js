@@ -136,3 +136,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the search history on page load
     renderSearchHistory();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const saveSettingsButton = document.getElementById("save-settings");
+
+    saveSettingsButton.addEventListener("click", function() {
+        const selectedLanguage = document.getElementById("language").value;
+        localStorage.setItem("language", selectedLanguage);
+        alert("Settings saved!");
+    });
+
+    // Load saved settings on page load
+    const savedLanguage = localStorage.getItem("language");
+    if (savedLanguage) {
+        document.getElementById("language").value = savedLanguage;
+    }
+
