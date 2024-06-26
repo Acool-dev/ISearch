@@ -9,35 +9,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>ISearch</h1>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search...">
-            <button id="search-button">Search</button>
-            <div id="suggestions" class="suggestions"></div>
-        </div>
-        <div class="filters">
-            <label for="filter-date">Filter by Date:</label>
-            <select id="filter-date">
-                <option value="">Any time</option>
-                <option value="d">Past day</option>
-                <option value="w">Past week</option>
-                <option value="m">Past month</option>
-                <option value="y">Past year</option>
-            </select>
-            <label for="filter-type">Filter by Type:</label>
-            <select id="filter-type">
-                <option value="">All</option>
-                <option value="web">Web</option>
-                <option value="images">Images</option>
-                <option value="news">News</option>
-                <option value="videos">Videos</option>
-            </select>
+        <header>
+            <h1>ISearch</h1>
             <button id="toggle-theme">Toggle Dark Mode</button>
-        </div>
-        <div id="loader" class="loader" style="display:none;"></div>
-        <div id="search-results" class="results"></div>
-        <div id="related-searches" class="related-searches"></div>
-        <div id="search-history" class="search-history"></div>
+        </header>
+        <main>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button">Search</button>
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+            <div class="filters">
+                <label for="filter-date">Filter by Date:</label>
+                <select id="filter-date">
+                    <option value="">Any time</option>
+                    <option value="d">Past day</option>
+                    <option value="w">Past week</option>
+                    <option value="m">Past month</option>
+                    <option value="y">Past year</option>
+                </select>
+                <label for="filter-type">Filter by Type:</label>
+                <select id="filter-type">
+                    <option value="">All</option>
+                    <option value="web">Web</option>
+                    <option value="images">Images</option>
+                    <option value="news">News</option>
+                    <option value="videos">Videos</option>
+                </select>
+            </div>
+            <div id="loader" class="loader" style="display:none;"></div>
+            <div id="search-results" class="results"></div>
+            <div id="related-searches" class="related-searches"></div>
+            <div id="search-history" class="search-history"></div>
+        </main>
     </div>
 
     <script src="scripts.js"></script>
