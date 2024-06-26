@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Search Engine</title>
+    <title>ISearch</title>
     <link rel="stylesheet" href="styles.css">
     <script async src="https://cse.google.com/cse.js?cx=963b7e89967c04d66"></script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Custom Search Engine</h1>
-            <nav>
-                <a href="index.html">Search</a>
-                <a href="settings.html">Settings</a>
-            </nav>
-            <button id="toggle-theme">Toggle Dark Mode</button>
+        <header class="isearch-header">
+            <div class="isearch-buttons">
+                <div class="isearch-button isearch-close"></div>
+                <div class="isearch-button isearch-minimize"></div>
+                <div class="isearch-button isearch-expand"></div>
+            </div>
+            <h1 class="isearch-title">ISearch</h1>
+            <div class="isearch-controls">
+                <button id="toggle-theme" class="isearch-button isearch-theme-toggle">Toggle Dark Mode</button>
+            </div>
         </header>
         <main>
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search...">
-                <button id="search-button">Search</button>
-                <div id="suggestions" class="suggestions"></div>
+            <div class="isearch-search-bar">
+                <input type="text" id="search-input" class="isearch-input" placeholder="Search ISearch...">
+                <button id="search-button" class="isearch-button isearch-search-button">Search</button>
+                <div id="suggestions" class="isearch-suggestions"></div>
             </div>
-            <div class="filters">
-                <label for="filter-date">Filter by Date:</label>
-                <select id="filter-date">
+            <div class="isearch-filters">
+                <label for="filter-date" class="isearch-label">Filter by Date:</label>
+                <select id="filter-date" class="isearch-select">
                     <option value="">Any time</option>
                     <option value="d">Past day</option>
                     <option value="w">Past week</option>
                     <option value="m">Past month</option>
                     <option value="y">Past year</option>
                 </select>
-                <label for="filter-type">Filter by Type:</label>
-                <select id="filter-type">
+                <label for="filter-type" class="isearch-label">Filter by Type:</label>
+                <select id="filter-type" class="isearch-select">
                     <option value="">All</option>
                     <option value="web">Web</option>
                     <option value="images">Images</option>
@@ -41,10 +44,11 @@
                     <option value="videos">Videos</option>
                 </select>
             </div>
-            <div id="loader" class="loader" style="display:none;"></div>
-            <div id="search-results" class="results"></div>
-            <div id="related-searches" class="related-searches"></div>
-            <div id="search-history" class="search-history"></div>
+            <div id="loader" class="isearch-loader"></div>
+            <div id="search-results" class="isearch-results"></div>
+            <div id="related-searches" class="isearch-related-searches"></div>
+            <div id="search-history" class="isearch-search-history"></div>
+            <div id="pagination" class="isearch-pagination"></div>
         </main>
     </div>
 
