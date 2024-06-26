@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+        <div id="search-results"></div>
+    </div>
+
+    <script>
+        function loadSearchResults() {
+            var searchUrl = new URL(window.location.href);
+            var query = searchUrl.searchParams.get("q");
+            var resultsDiv = document.getElementById("search-results");
+
+            if (query) {
+                resultsDiv.innerHTML = `<p>Search results for: <strong>${query}</strong></p>`;
+            } else {
+                resultsDiv.innerHTML = "<p>No search query found.</p>";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadSearchResults();
+        });
+    </script>
+</body>
+</html>
