@@ -1,154 +1,92 @@
 const apiKey = 'AIzaSyB9DPeArfIwGk9gmaEBXk2h9PI5p7DQJXo';
 const searchEngineId = '963b7e89967c04d66';
 
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("search-input");
-    const searchButton = document.getElementById("search-button");
-    const loader = document.getElementById("loader");
-    const resultsDiv = document.getElementById("search-results");
-    const suggestionsDiv = document.getElementById("suggestions");
-    const filterDate = document.getElementById("filter-date");
-    const filterType = document.getElementById("filter-type");
-    const toggleThemeButton = document.getElementById("toggle-theme");
-    const relatedSearchesDiv = document.getElementById("related-searches");
-    const searchHistoryDiv = document.getElementById("search-history");
-    const paginationDiv = document.createElement('div');
-    paginationDiv.className = 'pagination';
-    resultsDiv.appendChild(paginationDiv);
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    const filterDate = document.getElementById('filter-date');
+    const filterType = document.getElementById('filter-type');
+    const searchResults = document.getElementById('search-results');
+    const relatedSearches = document.getElementById('related-searches');
+    const searchHistory = document.getElementById('search-history');
+    const pagination = document.getElementById('pagination');
+    const loader = document.getElementById('loader');
+    const toggleThemeButton = document.getElementById('toggle-theme');
+    let darkMode = false;
 
-    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    const apiKey = 'AIzaSyB9DPeArfIwGk9gmaEBXk2h9PI5p7DQJXo';
+    const cseId = '963b7e89967c04d66';
 
-    function updateSearchHistory(query) {
-        if (!searchHistory.includes(query)) {
-            searchHistory.push(query);
-            if (searchHistory.length > 5) {
-                searchHistory.shift();
-            }
-            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-        }
-        renderSearchHistory();
-    }
-
-    function renderSearchHistory() {
-        searchHistoryDiv.innerHTML = `<h3>Search History</h3><ul>${searchHistory.map(item => `<li><a href="#">${item}</a></li>`).join('')}</ul>`;
-        searchHistoryDiv.querySelectorAll('a').forEach((a, index) => {
-            a.addEventListener('click', () => {
-                searchInput.value = searchHistory[index];
-                fetchSearchResults(searchHistory[index]).then(renderResults);
-            });
-        });
-    }
-
-    searchButton.addEventListener("click", function() {
+    const performSearch = async (startIndex = 1) => {
         const query = searchInput.value;
-        loader.style.display = "block";
-        fetchSearchResults(query).then(data => {
-            renderResults(data);
-            fetchRelatedSearches(query).then(renderRelatedSearches);
-            updateSearchHistory(query);
-        });
-    });
-
-    searchInput.addEventListener("input", function() {
-        fetchSuggestions(searchInput.value).then(renderSuggestions);
-    });
-
-    toggleThemeButton.addEventListener("click", function() {
-        document.body.classList.toggle('dark-mode');
-    });
-
-    function fetchSearchResults(query, start = 1) {
-        let url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${query}&start=${start}`;
         const dateFilter = filterDate.value;
         const typeFilter = filterType.value;
 
-        if (dateFilter) {
-            url += `&dateRestrict=${dateFilter}`;
+        if (!query) {
+            alert('Please enter a search query.');
+            return;
         }
 
-        if (typeFilter) {
-            url += `&searchType=${typeFilter}`;
+        showLoader(true);
+
+        try {
+            const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cseId}&q=${query}&start=${startIndex}&dateRestrict=${dateFilter}&searchType=${typeFilter}`);
+            const data = await response.json();
+            displayResults(data);
+            saveSearchHistory(query);
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        } finally {
+            showLoader(false);
+        }
+    };
+
+    const displayResults = (data) => {
+        if (data.items) {
+            searchResults.innerHTML = data.items.map(item => `
+                <div class="chrome-result">
+                    <h2><a href="${item.link}" target="_blank">${item.title}</a></h2>
+                    <p>${item.snippet}</p>
+                </div>
+            `).join('');
+        } else {
+            searchResults.innerHTML = '<p>No results found.</p>';
         }
 
-        return fetch(url).then(response => response.json());
-    }
+        if (data.queries && data.queries.nextPage) {
+            const nextPage = data.queries.nextPage[0].startIndex;
+            pagination.innerHTML = `
+                <button class="chrome-pagination-button" onclick="performSearch(${nextPage})">Next</button>
+            `;
+        } else {
+            pagination.innerHTML = '';
+        }
+    };
 
-    function fetchRelatedSearches(query) {
-        const url = `https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`;
-        return fetch(url).then(response => response.json()).then(data => data[1]);
-    }
+    const saveSearchHistory = (query) => {
+        const historyItem = document.createElement('div');
+        historyItem.classList.add('chrome-history-item');
+        historyItem.innerText = query;
+        searchHistory.appendChild(historyItem);
+    };
 
-    function fetchSuggestions(query) {
-        const url = `https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`;
-        return fetch(url).then(response => response.json()).then(data => data[1]);
-    }
+    const showLoader = (show) => {
+        loader.style.display = show ? 'block' : 'none';
+    };
 
-    function renderResults(data) {
-        loader.style.display = "none";
-        resultsDiv.style.display = "block";
-        resultsDiv.innerHTML = data.items.map(item => `
-            <div class="result-item">
-                <h2><a href="${item.link}" target="_blank">${item.title}</a></h2>
-                <p>${item.snippet}</p>
-            </div>
-        `).join('');
-        renderPagination(data.queries);
-    }
+    const toggleTheme = () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        toggleThemeButton.innerText = darkMode ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    };
 
-    function renderRelatedSearches(suggestions) {
-        relatedSearchesDiv.innerHTML = `<h3>Related Searches</h3><ul>${suggestions.map(suggestion => `<li><a href="#">${suggestion}</a></li>`).join('')}</ul>`;
-        relatedSearchesDiv.querySelectorAll('a').forEach((a, index) => {
-            a.addEventListener('click', () => {
-                searchInput.value = suggestions[index];
-                fetchSearchResults(suggestions[index]).then(renderResults);
-            });
-        });
-    }
+    searchButton.addEventListener('click', () => performSearch());
 
-    function renderSuggestions(suggestions) {
-        suggestionsDiv.innerHTML = suggestions.map(suggestion => `
-            <div>${suggestion}</div>
-        `).join('');
-        suggestionsDiv.style.display = suggestions.length ? 'block' : 'none';
-        suggestionsDiv.querySelectorAll('div').forEach((div, index) => {
-            div.addEventListener('click', () => {
-                searchInput.value = suggestions[index];
-                suggestionsDiv.style.display = 'none';
-            });
-        });
-    }
-
-    function renderPagination(queries) {
-        const nextPage = queries.nextPage ? queries.nextPage[0].startIndex : null;
-        const previousPage = queries.previousPage ? queries.previousPage[0].startIndex : null;
-
-        paginationDiv.innerHTML = `
-            ${previousPage ? `<button onclick="loadPage(${previousPage})">Previous</button>` : ''}
-            ${nextPage ? `<button onclick="loadPage(${nextPage})">Next</button>` : ''}
-        `;
-    }
-
-    window.loadPage = function(startIndex) {
-        loader.style.display = "block";
-        fetchSearchResults(searchInput.value, startIndex).then(renderResults);
-    }
-
-    // Initialize the search history on page load
-    renderSearchHistory();
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const saveSettingsButton = document.getElementById("save-settings");
-
-    saveSettingsButton.addEventListener("click", function() {
-        const selectedLanguage = document.getElementById("language").value;
-        localStorage.setItem("language", selectedLanguage);
-        alert("Settings saved!");
+    searchInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
     });
 
-    // Load saved settings on page load
-    const savedLanguage = localStorage.getItem("language");
-    if (savedLanguage) {
-        document.getElementById("language").value = savedLanguage;
-    }
-
+    toggleThemeButton.addEventListener('click', toggleTheme);
+});
