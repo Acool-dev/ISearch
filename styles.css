@@ -1,17 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f1f1f1;
     margin: 0;
     padding: 0;
+    background-color: #f1f1f1;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.chrome-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.isearch-header {
+.chrome-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,41 +20,42 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.isearch-buttons {
+.chrome-buttons {
     display: flex;
     gap: 8px;
 }
 
-.isearch-button {
+.chrome-button {
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
-.isearch-close {
+.chrome-close {
     background-color: #fc605b;
 }
 
-.isearch-minimize {
+.chrome-minimize {
     background-color: #fdbc40;
 }
 
-.isearch-expand {
+.chrome-expand {
     background-color: #34c749;
 }
 
-.isearch-title {
+.chrome-title {
     font-size: 1.2em;
     margin: 0;
     color: #333;
 }
 
-.isearch-controls {
+.chrome-controls {
     display: flex;
     align-items: center;
 }
 
-.isearch-theme-toggle {
+.chrome-theme-toggle {
     padding: 8px 12px;
     background-color: #007bff;
     color: #fff;
@@ -63,13 +64,24 @@ body {
     cursor: pointer;
 }
 
-.isearch-search-bar {
+.chrome-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chrome-search-bar {
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 800px;
     margin-top: 20px;
 }
 
-.isearch-input {
+.chrome-input {
     flex: 1;
     padding: 10px;
     font-size: 1em;
@@ -77,7 +89,7 @@ body {
     border-radius: 4px;
 }
 
-.isearch-search-button {
+.chrome-search-button {
     padding: 10px 20px;
     font-size: 1em;
     background-color: #007bff;
@@ -88,25 +100,28 @@ body {
     margin-left: 10px;
 }
 
-.isearch-filters {
-    margin-top: 10px;
+.chrome-filters {
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 10px;
 }
 
-.isearch-label {
+.chrome-label {
     margin-right: 10px;
     font-size: 0.9em;
 }
 
-.isearch-select {
+.chrome-select {
     padding: 8px;
     font-size: 0.9em;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-right: 10px;
 }
 
-.isearch-loader {
+.chrome-loader {
     display: none;
     width: 50px;
     height: 50px;
@@ -122,7 +137,11 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-.isearch-results {
+.chrome-results,
+.chrome-related-searches,
+.chrome-search-history {
+    width: 100%;
+    max-width: 800px;
     margin-top: 20px;
     padding: 10px;
     background-color: #fff;
@@ -130,28 +149,12 @@ body {
     border-radius: 4px;
 }
 
-.isearch-related-searches {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.isearch-search-history {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.isearch-pagination {
+.chrome-pagination {
     margin-top: 20px;
     text-align: center;
 }
 
-.isearch-pagination button {
+.chrome-pagination button {
     margin: 0 5px;
     padding: 5px 10px;
     font-size: 1em;
@@ -164,59 +167,83 @@ body {
     color: #fff;
 }
 
+.dark-mode .chrome-header {
+    background-color: #444;
+    border-bottom-color: #555;
+}
+
+.dark-mode .chrome-search-bar .chrome-input,
+.dark-mode .chrome-filters .chrome-select,
+.dark-mode .chrome-results,
+.dark-mode .chrome-related-searches,
+.dark-mode .chrome-search-history {
+    background-color: #444;
+    color: #fff;
+    border-color: #555;
+}
+
+.dark-mode .chrome-search-button {
+    background-color: #0056b3;
+}
+
+.dark-mode .chrome-loader {
+    border-color: #555;
+    border-top-color: #0056b3;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
-    .container {
+    .chrome-container {
         padding: 10px;
     }
 
-    .isearch-header {
+    .chrome-header {
         padding: 8px;
     }
 
-    .isearch-title {
+    .chrome-title {
         font-size: 1em;
     }
 
-    .isearch-buttons {
+    .chrome-buttons {
         gap: 4px;
     }
 
-    .isearch-button {
+    .chrome-button {
         width: 10px;
         height: 10px;
     }
 
-    .isearch-input {
+    .chrome-input {
         font-size: 0.9em;
     }
 
-    .isearch-search-button {
+    .chrome-search-button {
         padding: 8px 16px;
     }
 
-    .isearch-label {
+    .chrome-label {
         font-size: 0.8em;
     }
 
-    .isearch-select {
+    .chrome-select {
         padding: 6px;
         font-size: 0.8em;
     }
 
-    .isearch-loader {
+    .chrome-loader {
         width: 40px;
         height: 40px;
         border-width: 4px;
     }
 
-    .isearch-results,
-    .isearch-related-searches,
-    .isearch-search-history {
+    .chrome-results,
+    .chrome-related-searches,
+    .chrome-search-history {
         padding: 8px;
     }
 
-    .isearch-pagination button {
+    .chrome-pagination button {
         padding: 4px 8px;
         font-size: 0.9em;
     }
