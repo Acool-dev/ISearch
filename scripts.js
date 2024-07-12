@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleThemeButton = document.getElementById('toggle-theme');
     let darkMode = false;
 
-    const apiKey = 'AIzaSyB9DPeArfIwGk9gmaEBXk2h9PI5p7DQJXo';
+    const apiKey = 'AIzaSyB9DPeArfIwGk9gmaEBXk2h9PI5p7DQJXo'; 
     const cseId = '963b7e89967c04d66';
 
     const performSearch = async (startIndex = 1) => {
